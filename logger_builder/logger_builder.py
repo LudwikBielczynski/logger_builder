@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from logging import Logger, Formatter, DEBUG, getLogger
-
+from logging import Logger, DEBUG, getLogger
 from typing import TYPE_CHECKING, Sequence
 
 from .handler import HandlerAbstract
@@ -10,6 +9,11 @@ if TYPE_CHECKING:
 
 class LoggerBuilderAbstract(ABC):
 
+    def __init__(self, handlers: Sequence[HandlerAbstract]) -> None:
+        self._handlers = handlers
+
+    def reset(self) -> None:
+        self._handlers = []
 
     @abstractmethod
     def create_logger(self, logger_name: str) -> Logger:
@@ -17,13 +21,11 @@ class LoggerBuilderAbstract(ABC):
 
 class LoggerBuilder(LoggerBuilderAbstract):
 
-    def __init__(self, handlers: Sequence[HandlerAbstract]) -> None:
-        self.handlers = handlers
 
     def create_logger(self, logger_name: str) -> Logger:
         logger = getLogger(logger_name)
         logger.setLevel(DEBUG)
-        for handler in self.handlers:
+        for handler in self._handlers:
             logger = handler.add_handler(logger)
 
         return logger
