@@ -1,11 +1,8 @@
 from abc import ABC, abstractmethod
 from logging import Logger, DEBUG, getLogger
-from typing import TYPE_CHECKING, Sequence
+from typing import Sequence
 
 from .handler import HandlerAbstract
-
-if TYPE_CHECKING:
-    from logging import Logger
 
 class LoggerBuilderAbstract(ABC):
 
@@ -20,7 +17,6 @@ class LoggerBuilderAbstract(ABC):
         '''Method implemented in concrete class returning a logger'''
 
 class LoggerBuilder(LoggerBuilderAbstract):
-
 
     def create_logger(self, logger_name: str) -> Logger:
         logger = getLogger(logger_name)
