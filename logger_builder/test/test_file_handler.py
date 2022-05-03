@@ -32,7 +32,7 @@ def test_log_file_present(logger_to_file, tmp_path):
     log_files = list(tmp_path.iterdir())
     assert len(log_files) == 1
 
-def test_basic_stream_output(logglogger_to_fileer, tmp_path):
+def test_basic_stream_output(logger_to_file, tmp_path):
     # Act
     message = 'Something'
     logger_to_file.info(message)

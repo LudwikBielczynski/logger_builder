@@ -1,5 +1,5 @@
 from datetime import datetime
-from logging import DEBUG, Formatter, Logger, FileHandler
+from logging import DEBUG, Formatter, Logger, FileHandler as FileHandlerLogging
 from typing import TYPE_CHECKING
 
 from .abstract import HandlerAbstract
@@ -18,7 +18,7 @@ class FileHandler(HandlerAbstract):
 
     def add_handler(self, logger: Logger, logging_level: int = DEBUG) -> Logger:
         file_name = f'{datetime.now().date()}_{logger.name}.log'
-        file_handler = FileHandler(self.log_file_path / file_name)
+        file_handler = FileHandlerLogging(self.log_file_path / file_name)
 
         file_handler.setLevel(logging_level)
         file_handler.setFormatter(self.formatter)
