@@ -6,4 +6,5 @@ def create_basic_formatter() -> Formatter:
         '{%(name)s.%(funcName)s:%(lineno)d} %(message)s'
         )
     formatter = Formatter(fmt=logs_format, datefmt="%Y-%m-%d %H:%M:%S")
+
     return formatter

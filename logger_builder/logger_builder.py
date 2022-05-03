@@ -18,9 +18,10 @@ class LoggerBuilderAbstract(ABC):
 
 class LoggerBuilder(LoggerBuilderAbstract):
 
-    def create_logger(self, logger_name: str) -> Logger:
+    def create_logger(self, logger_name: str, logging_level: int = DEBUG) -> Logger:
         logger = getLogger(logger_name)
-        logger.setLevel(DEBUG)
+        logger.setLevel(logging_level)
+
         for handler in self._handlers:
             logger = handler.add_handler(logger)
 
