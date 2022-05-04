@@ -3,7 +3,7 @@ from unittest import TestCase
 
 
 from logger_builder import LoggerBuilder
-from logger_builder.formatter import create_basic_formatter
+from logger_builder.formatter import create_formatter
 from logger_builder.handler import StreamHandler
 
 class TestBasicLogging(TestCase):
