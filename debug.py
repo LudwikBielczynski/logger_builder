@@ -16,12 +16,12 @@ if __name__ == "__main__":
 
     stream_handler_factory = StreamHandlerFactory(formatter)
 
-    memory_handler_factory = MemoryHandlerFactory(file_handler_factory, 100)
+    memory_handler_factory = MemoryHandlerFactory(file_handler_factory, 3)
 
 
     handler_factories = [stream_handler_factory, memory_handler_factory]
     logger_builder = LoggerBuilder(handler_factories)
     logger = logger_builder.create_logger("trial")
 
-    for log_nr in range(0, 5):
+    for log_nr in range(0, 6):
         logger.info(f"Something {log_nr}")
