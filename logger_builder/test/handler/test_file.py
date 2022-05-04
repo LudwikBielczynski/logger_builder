@@ -1,15 +1,15 @@
 import logging
-from unittest import TestCase
 
 import pytest
 
 from logger_builder import LoggerBuilder
-from logger_builder.formatter import create_basic_formatter
+from logger_builder.formatter import create_formatter
 from logger_builder.handler import FileHandler
+
 
 @pytest.fixture(autouse=True)
 def logger_to_file(tmp_path):
-    formatter = create_basic_formatter()
+    formatter = create_formatter()
     file_handler = FileHandler(tmp_path, formatter)
 
     handlers = [file_handler]
@@ -20,8 +20,10 @@ def logger_to_file(tmp_path):
 
     return logger
 
+
 def test_attached_file_handler(logger_to_file):
     assert type(logger_to_file.handlers[0]) == logging.FileHandler
+
 
 def test_log_file_present(logger_to_file, tmp_path):
     # Act
@@ -32,10 +34,11 @@ def test_log_file_present(logger_to_file, tmp_path):
     log_files = list(tmp_path.iterdir())
     assert len(log_files) == 1
 
+
 def test_basic_stream_output(logger_to_file, tmp_path):
     # Act
-    message = 'Something'
-    logger_to_file.info(message)
+    message_to_log = 'Something'
+    logger_to_file.info(message_to_log)
 
     # Assert
     log_files = list(tmp_path.iterdir())
@@ -43,4 +46,7 @@ def test_basic_stream_output(logger_to_file, tmp_path):
         logs_in_file = log_file.readlines()
 
     assert len(logs_in_file) == 1
-    assert logs_in_file[0].split('} ')[1].split('\n')[0] == message
+    message_logged = logs_in_file[0] \
+        .split(' ')[-1] \
+        .split('\n')[0]
+    assert message_logged == message_to_log

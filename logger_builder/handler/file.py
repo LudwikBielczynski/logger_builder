@@ -7,6 +7,7 @@ from .abstract import HandlerAbstract
 if TYPE_CHECKING:
     from pathlib import Path
 
+
 class FileHandler(HandlerAbstract):
 
     def __init__(self,

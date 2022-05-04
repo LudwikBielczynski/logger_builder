@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from logging import DEBUG, Logger
 
+
 class HandlerAbstract(ABC):
 
     @abstractmethod

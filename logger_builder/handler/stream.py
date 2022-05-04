@@ -3,6 +3,7 @@ import sys
 
 from .abstract import HandlerAbstract
 
+
 class StreamHandler(HandlerAbstract):
 
     def __init__(self, formatter: Formatter) -> None:
