@@ -4,17 +4,17 @@ import pytest
 
 from logger_builder import LoggerBuilder
 from logger_builder.formatter import create_formatter
-from logger_builder.handler import FileHandler
+from logger_builder.handler.factory import FileHandlerFactory
 
 
 @pytest.fixture(autouse=True)
 def logger_to_file(tmp_path):
     formatter = create_formatter()
-    file_handler = FileHandler(tmp_path, formatter)
-
-    handlers = [file_handler]
-    logger_builder = LoggerBuilder(handlers)
     logger_name = 'logger_to_file'
+    file_handler_factory = FileHandlerFactory(tmp_path, logger_name, formatter)
+
+    handler_factories = [file_handler_factory]
+    logger_builder = LoggerBuilder(handler_factories)
 
     logger = logger_builder.create_logger(logger_name)
 

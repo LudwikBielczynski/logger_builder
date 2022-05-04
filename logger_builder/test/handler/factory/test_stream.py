@@ -1,6 +1,6 @@
 import logging
 
-from logger_builder.test.handler.fixtures import logger_stream
+from logger_builder.test.handler.factory.fixtures import logger_stream
 
 def test_attached_stream_handler(logger_stream):
     assert type(logger_stream.handlers[0]) == logging.StreamHandler

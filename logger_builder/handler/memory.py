@@ -17,7 +17,10 @@ class CustomMemoryHandler(MemoryHandler):
         try:
             if self.target:
                 # Send to target all the list of logs, so that they are processed in batch
-                self.target.handle(self.buffer)
+                for log in self.buffer:
+                    self.target.handle(log)
+
+                # self.target.handle(self.buffer)
                 self.buffer.clear()
         finally:
             self.release()

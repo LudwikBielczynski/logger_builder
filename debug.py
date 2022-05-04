@@ -1,19 +1,27 @@
+from logging import DEBUG
 from pathlib import Path
 
 from logger_builder import LoggerBuilder
 from logger_builder.formatter import create_formatter
-from logger_builder.handler import StreamHandler, FileHandler
+from logger_builder.handler.factory import (StreamHandlerFactory,
+                                            FileHandlerFactory,
+                                            MemoryHandlerFactory,
+                                            )
 
 if __name__ == "__main__":
     formatter = create_formatter(simple_description=True)
-    stream_handler = StreamHandler(formatter)
 
     log_file_path = Path("~/Downloads").expanduser()
-    file_handler = FileHandler(log_file_path, formatter)
+    file_handler_factory = FileHandlerFactory(log_file_path, 'trial', formatter)
 
-    handlers = [stream_handler, file_handler]
-    logger_builder = LoggerBuilder(handlers)
+    stream_handler_factory = StreamHandlerFactory(formatter)
+
+    memory_handler_factory = MemoryHandlerFactory(file_handler_factory, 100)
+
+
+    handler_factories = [stream_handler_factory, memory_handler_factory]
+    logger_builder = LoggerBuilder(handler_factories)
     logger = logger_builder.create_logger("trial")
 
-    logger.info("Something")
-    logger.info("Something2")
+    for log_nr in range(0, 5):
+        logger.info(f"Something {log_nr}")
