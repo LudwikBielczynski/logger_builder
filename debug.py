@@ -16,10 +16,10 @@ if __name__ == "__main__":
 
     stream_handler_factory = StreamHandlerFactory(formatter)
 
-    memory_handler_factory = MemoryHandlerFactory(file_handler_factory, 3)
+    memory_handler_factory = MemoryHandlerFactory(stream_handler_factory, 3)
 
 
-    handler_factories = [stream_handler_factory, memory_handler_factory]
+    handler_factories = [file_handler_factory, memory_handler_factory]
     logger_builder = LoggerBuilder(handler_factories)
     logger = logger_builder.create_logger("trial")
 
