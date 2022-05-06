@@ -6,7 +6,9 @@ def load_description_from_file(file_name: str, long_description: str) -> str:
     try:
         if Path(file_name).is_file():
             with open(file_name, "r", encoding="utf-8") as fh:
-                long_description = fh.read()
+                long_description_partial = fh.read()
+        long_description += "\n\n"
+        long_description += long_description_partial
     except Exception as e:
         pass
 
@@ -16,12 +18,12 @@ def load_description_from_file(file_name: str, long_description: str) -> str:
 long_description = ""
 for description_file in ["README.md", "CHANGELOG.md"]:
     long_description = load_description_from_file(description_file, long_description)
-    long_description += "/n/n"
+
 
 
 setuptools.setup(
     name="logger_builder",
-    version="0.0.2",
+    version="0.0.3",
     author="Ludwik Bielczynski",
     author_email="ludwik.bielczynski@gmail.com",
     description="Logger builder to simplify creation of the loggers",
