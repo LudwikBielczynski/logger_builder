@@ -10,6 +10,10 @@ def create_formatter(
     datetime_format: str = "%Y-%m-%d %H:%M:%S",
     simple_description: bool = False,
 ) -> Formatter:
+    """
+    A function to create a logging formatter. It uses the formatting attributes which are used in
+    logging. Setting them true will add the info to each emitted log.
+    """
     # Create a formatter with only date and message logs
     if simple_description:
         levelname = False

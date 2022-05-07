@@ -5,6 +5,10 @@ from .abstract import HandlerFactoryAbstract
 
 
 class MemoryHandlerFactory(HandlerFactoryAbstract):
+    """
+    Factory used to create a memory handler. It needs a different memory handler factory which will
+    be passed as an attribute. This target handler will be buffered by the memory handler.
+    """
 
     def __init__(self,
                  target_handler_factory: HandlerFactoryAbstract,

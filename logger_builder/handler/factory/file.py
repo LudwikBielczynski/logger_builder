@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 
 
 class FileHandlerFactory(HandlerFactoryAbstract):
+    """File handler factory used to create a simple file handler logger in a specified place."""
 
     def __init__(self,
                  log_file_path: 'Path',

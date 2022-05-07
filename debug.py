@@ -1,4 +1,3 @@
-from logging import DEBUG
 from pathlib import Path
 
 from logger_builder import LoggerBuilder
@@ -12,14 +11,14 @@ if __name__ == "__main__":
     formatter = create_formatter(simple_description=True)
 
     log_file_path = Path("~/Downloads").expanduser()
-    file_handler_factory = FileHandlerFactory(log_file_path, 'trial', formatter)
+    file_handler_factory = FileHandlerFactory(
+        log_file_path, 'trial', formatter)
 
     stream_handler_factory = StreamHandlerFactory(formatter)
 
     memory_handler_factory = MemoryHandlerFactory(stream_handler_factory, 3)
 
-
-    handler_factories = [file_handler_factory, memory_handler_factory]
+    handler_factories = set([file_handler_factory, memory_handler_factory])
     logger_builder = LoggerBuilder(handler_factories)
     logger = logger_builder.create_logger("trial")
 

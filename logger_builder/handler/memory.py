@@ -1,7 +1,27 @@
+from logging import ERROR
 from logging.handlers import MemoryHandler
 
 
 class CustomMemoryHandler(MemoryHandler):
+    '''
+    Memory handler is needed if a constant stream of logs is slowing down the software, for example
+    in an HTTP logger where we want to flush once in a while all the logs. If all of them are sent
+    in batch, a custom implementation in the handler should be done of the handle().
+    '''
+
+    def __init__(self,
+                 capacity,
+                 flushLevel=ERROR,
+                 target=None,
+                 flushOnClose=True,
+                 batch_handle_buffer: bool = False,
+                 ) -> None:
+        super().__init__(capacity,
+                         flushLevel,
+                         target,
+                         flushOnClose,
+                         )
+        self.batch_handle_buffer = batch_handle_buffer
 
     def emit(self, record):
         """
@@ -31,7 +51,10 @@ class CustomMemoryHandler(MemoryHandler):
         self.acquire()
         try:
             if self.target:
-                # Send to target all the logs
+                # Send to target all the logs or handle one by one
+                if self.batch_handle_buffer:
+                    self.target.handle(buffer)
+
                 for log in self.buffer:
                     self.target.handle(log)
 
